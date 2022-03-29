@@ -1,0 +1,125 @@
+<html>
+<head>
+  
+</head>
+   <body style="background-color: purple;
+                color: white;">
+   
+    <form onsubmit="return addBatch(event);">
+       <br>
+     <label>Date</label>
+     <input class="date">
+     <br>
+     <label>Plant</label>
+     <input class="plant">
+     <br>
+     <label>Amount</label>
+     <input class="amount">
+    <br>
+     <div class="first-div">
+    <input type="submit"  class="first-button" value="Add batch"> <br>
+    </div><br>      
+    </form>
+     
+    <form onsubmit="return removeFromInventory()">
+      <label>Index Number</label>
+     <input class="indexNumber">
+     <button onlick="return removeFromInventory">Remove Batch</button> 
+    </form>   
+   <div class= "removeItem">
+     
+       
+    <div class= "inventory-list">
+    
+    </div>
+
+</body>
+<script >
+//3-22 homework: create individual containers for editing inventory items in window. Next Step: have buttons next to each index batch on the screen.
+    
+inventory = [];
+  
+//function to add a new batch object to the inventory array
+addBatch = function(event) {
+    
+    event.preventDefault();
+    
+    var date=document.getElementsByClassName("date")[0].value;
+    var plant=document.getElementsByClassName("plant")[0].value;
+    var amount=document.getElementsByClassName("amount")[0].value;
+    
+    var batch = {};   
+    batch.date = date
+    batch.plant = plant
+    batch.amount = amount
+    
+    //homework: create an inventory from local storage. setItem and getItem//
+    
+    inventory.push(batch);
+    console.log(batch);
+    
+    inventory_str = JSON.stringify(inventory);
+    console.log(inventory_str);
+  
+    localStorage.setItem("inventory", inventory_str); 
+    
+    refreshInventory();
+    
+};
+
+//function to display inventory in batch units in the window
+refreshInventory = function() {
+    var myDiv = document.getElementsByClassName("inventory-list")[0];
+    
+    
+   myDiv.innerHTML = ""; 
+    for(var i=0;i<inventory.length;i++){
+        var batch = inventory[i];
+     
+        myDiv.innerHTML =  myDiv.innerHTML + "index: " + i + "<br>date: " + batch.date + "<br>plant: " + batch.plant + "<br>amount: " + batch.amount + "<br><br>";    
+    }   
+    
+
+};
+ 
+//deployable function to remove a batch item from inventory array
+removeFromInventory = function(inventoryIndex) {
+    inventory.splice(inventoryIndex,1);
+    
+    inventory_str = JSON.stringify(inventory);
+    console.log(inventory_str);
+  
+    localStorage.setItem("inventory", inventory_str);
+    
+    console.log(inventory);
+    console.log(localStorage.getItem("inventory"));
+    
+    refreshInventory();
+};    
+
+    
+//windows onload function to display the saved inventory units 
+function init() {
+    
+    inventory = JSON.parse(localStorage.getItem("inventory"));
+    
+    if (inventory == null) {
+        inventory = [];
+    }
+    
+    var myDiv = document.getElementsByClassName("inventory-list")[0];
+    var someInventory = localStorage.getItem("inventory");    
+    
+    refreshInventory();
+        
+    console.log(localStorage.getItem("inventory"));   
+    
+};
+    
+window.onload = init;
+    
+  </script>
+
+</html>
+
+
