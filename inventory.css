@@ -1,0 +1,46 @@
+body {
+    background-color: purple;
+    color: white;
+}
+
+
+.div-shadow {
+    width: 5em;
+    height: 2em;
+    margin: 0 1em 1em 0;
+    transition: all 100ms ease-in-out;
+}
+
+#div-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    margin: 2em 0em;
+}
+
+.div-shadow:nth-child(odd){
+    background-color: aliceblue;
+}
+
+.div-shadow:nth-child(even){
+    background-color: antiquewhite;
+}
+
+.div-shadow:hover{
+    transform:scale(1.2);
+}
+
+.strike{
+    text-decoration: line-through;
+}
+
+input:checked + span {
+    text-decoration: line-through;
+
+}
+
+td{
+    border: 1px solid white;
+    padding: 5px;
+}
+    
